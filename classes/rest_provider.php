@@ -30,7 +30,8 @@ class ezpRestApiProvider implements ezpRestProviderInterface
      *
      * @return ezpRestViewController
      */
-    public function getViewController() {
-        // TODO: Implement getViewController() method.
+    public function getViewController()
+    {
+        return new ezpRestApiViewController();
     }
 }
