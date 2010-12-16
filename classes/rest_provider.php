@@ -9,11 +9,11 @@
 class ezpRestApiProvider implements ezpRestProviderInterface
 {
     /**
-     * Returns registered versioned routs for provider
+     * Returns registered versioned routes for provider
      *
      * @return array
      */
-    public function getRouts()
+    public function getRoutes()
     {
         return array( new ezpRestVersionedRoute( new ezcMvcRailsRoute( '/content/node/:nodeId/listAtom', 'ezpRestAtomController', 'collection' ), 1 ),
                       new ezpRestVersionedRoute( new ezcMvcRailsRoute( '/content/node/:nodeId/list', 'ezpRestContentController', 'list' ), 1 ),
