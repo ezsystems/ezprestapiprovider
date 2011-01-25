@@ -16,7 +16,7 @@ class ezpRestApiProvider implements ezpRestProviderInterface
     public function getRoutes()
     {
         return array( new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/node/:nodeId/listAtom', 'ezpRestAtomController', 'collection' ), 1 ),
-                      new ezpRestVersionedRoute( new ezpMvcRegexpRoute( '@^/content/node/(?P<nodeId>\d+)/list@', 'ezpRestContentController', 'list' ), 1 ),
+                      new ezpRestVersionedRoute( new ezpMvcRegexpRoute( '@^/content/node/(?P<nodeId>\d+)/list(?:/offset/(?P<offset>\d+))?(?:/limit/(?P<limit>\d+))?(?:/sort/(?P<sortKey>\w+)(?:/(?P<sortType>asc|desc))?)?$@', 'ezpRestContentController', 'list' ), 1 ),
                       new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/node/:nodeId', 'ezpRestContentController', 'viewContent' ), 1 ),
                       new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/node/:nodeId/fields', 'ezpRestContentController', 'viewFields' ), 1 ),
                       new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/node/:nodeId/field/:fieldIdentifier', 'ezpRestContentController', 'viewField' ), 1 ),
