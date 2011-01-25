@@ -15,14 +15,18 @@ class ezpRestApiProvider implements ezpRestProviderInterface
      */
     public function getRoutes()
     {
-        return array( new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/node/:nodeId/listAtom', 'ezpRestAtomController', 'collection' ), 1 ),
-                      new ezpRestVersionedRoute( new ezpMvcRegexpRoute( '@^/content/node/(?P<nodeId>\d+)/list(?:/offset/(?P<offset>\d+))?(?:/limit/(?P<limit>\d+))?(?:/sort/(?P<sortKey>\w+)(?:/(?P<sortType>asc|desc))?)?$@', 'ezpRestContentController', 'list' ), 1 ),
-                      new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/node/:nodeId', 'ezpRestContentController', 'viewContent' ), 1 ),
-                      new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/node/:nodeId/fields', 'ezpRestContentController', 'viewFields' ), 1 ),
-                      new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/node/:nodeId/field/:fieldIdentifier', 'ezpRestContentController', 'viewField' ), 1 ),
-                      new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/object/:objectId', 'ezpRestContentController', 'viewContent' ), 1 ),
-                      new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/object/:objectId/fields', 'ezpRestContentController', 'viewFields' ), 1 ),
-                      new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/object/:objectId/field/:fieldIdentifier', 'ezpRestContentController', 'viewField' ), 1 ) );
+        $routes = array(
+            'listAtom'        => new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/node/:nodeId/listAtom', 'ezpRestAtomController', 'collection' ), 1 ),
+            // @TODO : Make possible to interchange optional params positions
+            'list'            => new ezpRestVersionedRoute( new ezpMvcRegexpRoute( '@^/content/node/(?P<nodeId>\d+)/list(?:/offset/(?P<offset>\d+))?(?:/limit/(?P<limit>\d+))?(?:/sort/(?P<sortKey>\w+)(?:/(?P<sortType>asc|desc))?)?$@', 'ezpRestContentController', 'list' ), 1 ),
+            'node'            => new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/node/:nodeId', 'ezpRestContentController', 'viewContent' ), 1 ),
+            'fieldsByNode'    => new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/node/:nodeId/fields', 'ezpRestContentController', 'viewFields' ), 1 ),
+            'fieldByNode'     => new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/node/:nodeId/field/:fieldIdentifier', 'ezpRestContentController', 'viewField' ), 1 ),
+            'object'          => new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/object/:objectId', 'ezpRestContentController', 'viewContent' ), 1 ),
+            'fieldsByObject'  => new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/object/:objectId/fields', 'ezpRestContentController', 'viewFields' ), 1 ),
+            'fieldByObject'   => new ezpRestVersionedRoute( new ezpMvcRailsRoute( '/content/object/:objectId/field/:fieldIdentifier', 'ezpRestContentController', 'viewField' ), 1 )
+        );
+        return $routes;
     }
 
     /**
