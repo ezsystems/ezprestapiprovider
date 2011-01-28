@@ -10,6 +10,6 @@ CacheTTL=1200
 
 [ezpRestContentController_viewContent_CacheSettings]
 ApplicationCache=enabled
-CacheTTL=3600
+CacheTTL=30
 
 */ ?>
