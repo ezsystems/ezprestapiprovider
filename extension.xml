@@ -9,10 +9,10 @@
 
     <dependencies>
         <requires>
-            <extension name="rest" />
             <extension name="oauth" />
         </requires>
         <extends>
+            <extension name="rest" />
         </extends>
     </dependencies>
 
