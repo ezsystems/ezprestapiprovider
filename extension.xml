@@ -6,14 +6,4 @@
         <copyright>Copyright (C) 1999-2010 eZ Systems AS</copyright>
         <license>GNU General Public License v2.0</license>
     </metadata>
-
-    <dependencies>
-        <requires>
-            <extension name="oauth" />
-        </requires>
-        <extends>
-            <extension name="rest" />
-        </extends>
-    </dependencies>
-
 </software>
