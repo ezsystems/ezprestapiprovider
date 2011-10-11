@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <software>
     <metadata>
-        <name>eZ API extension</name>
-        <version>1.0.0</version>
+        <name>eZ REST API Provider</name>
+        <version>//autogentag//</version>
         <copyright>Copyright (C) 1999-2010 eZ Systems AS</copyright>
         <license>GNU General Public License v2.0</license>
     </metadata>
