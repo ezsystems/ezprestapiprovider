@@ -20,7 +20,7 @@ class ezpRestContentServiceModelTest extends ezpDatabaseTestCase
     {
         $res = ezpRestContentModel::getMetadataByContent( ezpContent::fromNodeId( 2 ) );
         self::assertType( PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $res );
-        
+
         $expectedKeys = array(
             'objectName',
             'classIdentifier',
@@ -29,13 +29,13 @@ class ezpRestContentServiceModelTest extends ezpDatabaseTestCase
             'objectRemoteId',
             'objectId'
         );
-        
+
         foreach( $expectedKeys as $key )
         {
             self::assertArrayHasKey( $key, $res, "Content must contain $key metadata" );
         }
     }
-    
+
     /**
      * Tests metadata returned by model for given location
      * @group restContentServices
@@ -44,13 +44,13 @@ class ezpRestContentServiceModelTest extends ezpDatabaseTestCase
     {
         $res = ezpRestContentModel::getMetadataByLocation( ezpContentLocation::fetchByNodeId( 2 ) );
         self::assertType( PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $res );
-        
+
         $expectedKeys = array(
             'nodeId',
             'nodeRemoteId',
             'fullUrl'
         );
-        
+
         foreach( $expectedKeys as $key )
         {
             self::assertArrayHasKey( $key, $res, "Content location must contain $key metadata" );
@@ -59,7 +59,7 @@ class ezpRestContentServiceModelTest extends ezpDatabaseTestCase
                 case 'nodeId':
                     self::assertType( PHPUnit_Framework_Constraint_IsType::TYPE_INT, $res[$key], 'NodeId must be an integer' );
                 break;
-                   
+
                 case 'nodeRemoteId':
                 case 'fullUrl':
                     self::assertType( PHPUnit_Framework_Constraint_IsType::TYPE_STRING, $res[$key] );
@@ -67,7 +67,7 @@ class ezpRestContentServiceModelTest extends ezpDatabaseTestCase
             }
         }
     }
-    
+
     /**
      * Tests fields returned by model for given content
      * @group restContentServices
@@ -85,7 +85,7 @@ class ezpRestContentServiceModelTest extends ezpDatabaseTestCase
             self::assertSame( $attributeOutput, $res[$fieldName], "Result for field '$fieldName' must be the same as returned by ezpRestContentModel::attributeOutputData()" );
         }
     }
-    
+
     /**
      * Tests fields data that will be returned to the output
      * @group restContentServices
@@ -94,7 +94,7 @@ class ezpRestContentServiceModelTest extends ezpDatabaseTestCase
     {
         $content = ezpContent::fromNodeId( 2 );
         $expectedKeys = array( 'type', 'identifier', 'value', 'id', 'classattribute_id' );
-        
+
         // Browse all the fields and compare result provided by ezpRestContentModel::attributeOutputData() with manually generated data
         foreach( $content->fields as $fieldName => $field )
         {
@@ -108,22 +108,22 @@ class ezpRestContentServiceModelTest extends ezpDatabaseTestCase
                         self::assertType( PHPUnit_Framework_Constraint_IsType::TYPE_STRING, $aAttributeOutput[$key] );
                         self::assertEquals( $field->data_type_string, $aAttributeOutput[$key] );
                     break;
-                    
+
                     case 'identifier':
                         self::assertType( PHPUnit_Framework_Constraint_IsType::TYPE_STRING, $aAttributeOutput[$key] );
                         self::assertEquals( $field->contentclass_attribute_identifier, $aAttributeOutput[$key] );
                     break;
-                    
+
                     case 'value':
                         // Value can be either string or boolean
                         self::assertTrue( is_string( $aAttributeOutput[$key] ) || is_bool( $aAttributeOutput[$key] ) );
                     break;
-                    
+
                     case 'id':
                         self::assertType( PHPUnit_Framework_Constraint_IsType::TYPE_INT, $aAttributeOutput[$key] );
                         self::assertEquals( $field->id, $aAttributeOutput[$key] );
                     break;
-                    
+
                     case 'classattribute_id':
                         self::assertType( PHPUnit_Framework_Constraint_IsType::TYPE_INT, $aAttributeOutput[$key] );
                         self::assertEquals( $field->contentclassattribute_id, $aAttributeOutput[$key] );
@@ -132,7 +132,7 @@ class ezpRestContentServiceModelTest extends ezpDatabaseTestCase
             }
         }
     }
-    
+
     /**
      * Data provider for request objects
      */
@@ -143,17 +143,17 @@ class ezpRestContentServiceModelTest extends ezpDatabaseTestCase
         $r1->contentVariables = array( 'Translation' => 'eng-GB', 'OutputFormat' => 'xhtml' );
         $r1->protocol = 'http-get';
         $r1->host = 'ezpublish.dev';
-        
+
         $r2 = clone $r1;
         $r2->uri = '/api/ezp/content/node/43'; // Media
         $r2->get = array();
-        
+
         return array(
             array( $r1, 2 ),
             array( $r2, 43 )
         );
     }
-    
+
     /**
      * Tests service links for content fields
      * @group restContentServices
@@ -166,13 +166,13 @@ class ezpRestContentServiceModelTest extends ezpDatabaseTestCase
         $mvcConfig->runPreRoutingFilters( $request );
         $baseUri = $request->getBaseURI();
         $contentQueryString = $request->getContentQueryString( true );
-        
+
         $content = ezpContent::fromNodeId( $nodeId );
         $links = ezpRestContentModel::getFieldsLinksByContent( $content, $request );
         self::assertType( PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $links );
         self::assertArrayHasKey( '*', $links, 'Links for fields services must contain a wildcard (*) pointing to a service listing all fields content' ); // * stands for all fields
         self::assertEquals( $baseUri.'/fields'.$contentQueryString, $links['*'] );
-        
+
         // We must have one entry per field
         foreach( $content->fields as $fieldName => $field )
         {

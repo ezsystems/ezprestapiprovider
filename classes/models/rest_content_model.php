@@ -26,10 +26,10 @@ class ezpRestContentModel extends ezpRestModel
             'objectRemoteId'        => $content->remote_id,
             'objectId'              => (int)$content->id
         );
-        
+
         return $aMetadata;
     }
-    
+
     /**
      * Returns metadata for given content location as array
      * @param ezpContentLocation $location
@@ -39,16 +39,16 @@ class ezpRestContentModel extends ezpRestModel
     {
         $url = $location->url_alias;
         eZURI::transformURI( $url, false, 'full' ); // $url is passed as a reference
-        
+
         $aMetadata = array(
             'nodeId'        => (int)$location->node_id,
             'nodeRemoteId'  => $location->remote_id,
             'fullUrl'       => $url
         );
-        
+
         return $aMetadata;
     }
-    
+
     /**
      * Returns all locations for provided content as array.
      * @param ezpContent $content
@@ -69,10 +69,10 @@ class ezpRestContentModel extends ezpRestModel
             $locationData['isMain'] = $location->is_main;
             $aReturnLocations[] = $locationData;
         }
-        
+
         return $aReturnLocations;
     }
-    
+
     /**
      * Returns all fields for provided content
      * @param ezpContent $content
@@ -90,10 +90,10 @@ class ezpRestContentModel extends ezpRestModel
         {
             $aReturnFields[$name] = self::attributeOutputData( $field );
         }
-        
+
         return $aReturnFields;
     }
-    
+
     /**
      * Transforms an ezpContentField in an array representation
      * @todo Refactor, this doesn't really belong here. Either in ezpContentField, or in an extend class
@@ -148,7 +148,7 @@ class ezpRestContentModel extends ezpRestModel
             'classattribute_id'     => (int)$field->contentclassattribute_id
         );
     }
-    
+
     /**
      * Returns fields links for a given content, for a potential future request on a specific field.
      * Note that every link provided is based on the current URI.
@@ -162,7 +162,7 @@ class ezpRestContentModel extends ezpRestModel
          $links = array();
          $baseUri = $currentRequest->getBaseURI();
          $contentQueryString = $currentRequest->getContentQueryString( true );
-         
+
          foreach( $content->fields as $fieldName => $fieldValue )
          {
              $links[$fieldName] = $baseUri.'/field/'.$fieldName.$contentQueryString;
@@ -171,7 +171,7 @@ class ezpRestContentModel extends ezpRestModel
 
          return $links;
     }
-    
+
     /**
      * Returns all children node data, based on the provided criteria object
      * @param ezpContentCriteria $c
@@ -188,7 +188,7 @@ class ezpRestContentModel extends ezpRestModel
         {
             $childEntry = self::getMetadataByContent( $childNode );
             $childEntry = array_merge( $childEntry, self::getMetadataByLocation( $childNode->locations ) );
-            
+
             // Add fields with their values if requested
             if( in_array( ezpRestContentController::VIEWLIST_RESPONSEGROUP_FIELDS, $responseGroups ) )
             {
@@ -198,13 +198,13 @@ class ezpRestContentModel extends ezpRestModel
                     $childEntry['fields'][$fieldName] = self::attributeOutputData( $field );
                 }
             }
-            
+
             $aRetData[] = $childEntry;
         }
-        
+
         return $aRetData;
     }
-    
+
     /**
      * Returns the children count, based on the provided criteria object
      * @param ezpContentCriteria $c
