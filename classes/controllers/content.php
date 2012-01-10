@@ -54,7 +54,7 @@ class ezpRestContentController extends ezpRestMvcController
             $content = ezpContent::fromNodeId( $this->nodeId );
             $isNodeRequested = true;
         }
-        elseif ( isset( $this->objectId ) )
+        else if ( isset( $this->objectId ) )
         {
             $content = ezpContent::fromObjectId( $this->objectId );
         }
@@ -66,10 +66,10 @@ class ezpRestContentController extends ezpRestMvcController
             $content->setActiveLanguage( $this->getContentVariable( 'Translation' ) );
 
         // Handle metadata
-        if( $this->hasResponseGroup( self::VIEWCONTENT_RESPONSEGROUP_METADATA ) )
+        if ( $this->hasResponseGroup( self::VIEWCONTENT_RESPONSEGROUP_METADATA ) )
         {
             $objectMetadata = ezpRestContentModel::getMetadataByContent( $content );
-            if( $isNodeRequested )
+            if ( $isNodeRequested )
             {
                 $nodeMetadata = ezpRestContentModel::getMetadataByLocation( ezpContentLocation::fetchByNodeId( $this->nodeId ) );
                 $objectMetadata = array_merge( $objectMetadata, $nodeMetadata );
@@ -78,13 +78,13 @@ class ezpRestContentController extends ezpRestMvcController
         }
 
         // Handle locations if requested
-        if( $this->hasResponseGroup( self::VIEWCONTENT_RESPONSEGROUP_LOCATIONS ) )
+        if ( $this->hasResponseGroup( self::VIEWCONTENT_RESPONSEGROUP_LOCATIONS ) )
         {
             $result->variables['locations'] = ezpRestContentModel::getLocationsByContent( $content );
         }
 
         // Handle fields content if requested
-        if( $this->hasResponseGroup( self::VIEWCONTENT_RESPONSEGROUP_FIELDS ) )
+        if ( $this->hasResponseGroup( self::VIEWCONTENT_RESPONSEGROUP_FIELDS ) )
         {
             $result->variables['fields'] = ezpRestContentModel::getFieldsByContent( $content );
         }
@@ -118,7 +118,7 @@ class ezpRestContentController extends ezpRestMvcController
             $content = ezpContent::fromNodeId( $this->nodeId );
             $isNodeRequested = true;
         }
-        elseif ( isset( $this->objectId ) )
+        else if ( isset( $this->objectId ) )
         {
             $content = ezpContent::fromObjectId( $this->objectId );
         }
@@ -130,16 +130,16 @@ class ezpRestContentController extends ezpRestMvcController
             $content->setActiveLanguage( $this->getContentVariable( 'Translation' ) );
 
         // Handle field values
-        if( $this->hasResponseGroup( self::VIEWFIELDS_RESPONSEGROUP_FIELDVALUES ) )
+        if ( $this->hasResponseGroup( self::VIEWFIELDS_RESPONSEGROUP_FIELDVALUES ) )
         {
             $result->variables['fields'] = ezpRestContentModel::getFieldsByContent( $content );
         }
 
         // Handle object/node metadata
-        if( $this->hasResponseGroup( self::VIEWFIELDS_RESPONSEGORUP_METADATA ) )
+        if ( $this->hasResponseGroup( self::VIEWFIELDS_RESPONSEGORUP_METADATA ) )
         {
             $objectMetadata = ezpRestContentModel::getMetadataByContent( $content );
-            if( $isNodeRequested )
+            if ( $isNodeRequested )
             {
                 $nodeMetadata = ezpRestContentModel::getMetadataByLocation( ezpContentLocation::fetchByNodeId( $this->nodeId ) );
                 $objectMetadata = array_merge( $objectMetadata, $nodeMetadata );
@@ -169,7 +169,7 @@ class ezpRestContentController extends ezpRestMvcController
             $isNodeRequested = true;
             $content = ezpContent::fromNodeId( $this->nodeId );
         }
-        elseif ( isset( $this->objectId ) )
+        else if ( isset( $this->objectId ) )
         {
             $content = ezpContent::fromObjectId( $this->objectId );
         }
@@ -186,16 +186,16 @@ class ezpRestContentController extends ezpRestMvcController
         $result = new ezpRestMvcResult();
 
         // Field data
-        if( $this->hasResponseGroup( self::VIEWFIELDS_RESPONSEGROUP_FIELDVALUES ) )
+        if ( $this->hasResponseGroup( self::VIEWFIELDS_RESPONSEGROUP_FIELDVALUES ) )
         {
             $result->variables['fields'][$this->fieldIdentifier] = ezpRestContentModel::attributeOutputData( $content->fields->{$this->fieldIdentifier} );
         }
 
         // Handle object/node metadata
-        if( $this->hasResponseGroup( self::VIEWFIELDS_RESPONSEGORUP_METADATA ) )
+        if ( $this->hasResponseGroup( self::VIEWFIELDS_RESPONSEGORUP_METADATA ) )
         {
             $objectMetadata = ezpRestContentModel::getMetadataByContent( $content, $isNodeRequested );
-            if( $isNodeRequested )
+            if ( $isNodeRequested )
             {
                 $nodeMetadata = ezpRestContentModel::getMetadataByLocation( ezpContentLocation::fetchByNodeId( $this->nodeId ) );
                 $objectMetadata = array_merge( $objectMetadata, $nodeMetadata );
@@ -239,7 +239,7 @@ class ezpRestContentController extends ezpRestMvcController
         $crit->accept[] = ezpContentCriteria::limit()->offset( $offset )->limit( $limit );
 
         // Sort criteria
-        if( isset( $this->sortKey ) )
+        if ( isset( $this->sortKey ) )
         {
             $sortOrder = isset( $this->sortType ) ? $this->sortType : 'asc';
             $crit->accept[] = ezpContentCriteria::sorting( $this->sortKey, $sortOrder );
@@ -249,14 +249,14 @@ class ezpRestContentController extends ezpRestMvcController
         // REST links to children nodes
         // Little dirty since this should belong to the model layer, but I don't want to pass the router nor the full controller to the model
         $contentQueryString = $this->request->getContentQueryString( true );
-        for( $i = 0, $iMax = count( $result->variables['childrenNodes'] ); $i < $iMax; ++$i )
+        for ( $i = 0, $iMax = count( $result->variables['childrenNodes'] ); $i < $iMax; ++$i )
         {
             $linkURI = $this->getRouter()->generateUrl( 'ezpNode', array( 'nodeId' => $result->variables['childrenNodes'][$i]['nodeId'] ) );
             $result->variables['childrenNodes'][$i]['link'] = $this->request->getHostURI().$linkURI.$contentQueryString;
         }
 
         // Handle Metadata
-        if( $this->hasResponseGroup( self::VIEWLIST_RESPONSEGROUP_METADATA ) )
+        if ( $this->hasResponseGroup( self::VIEWLIST_RESPONSEGROUP_METADATA ) )
         {
             $childrenCount = ezpRestContentModel::getChildrenCount( $crit );
             $result->variables['metadata'] = array(
@@ -279,7 +279,7 @@ class ezpRestContentController extends ezpRestMvcController
         $this->setDefaultResponseGroups( array( self::VIEWLIST_RESPONSEGROUP_METADATA ) );
         $result = new ezpRestMvcResult();
 
-        if( $this->hasResponseGroup( self::VIEWLIST_RESPONSEGROUP_METADATA ) )
+        if ( $this->hasResponseGroup( self::VIEWLIST_RESPONSEGROUP_METADATA ) )
         {
             $crit = new ezpContentCriteria();
             $crit->accept[] = ezpContentCriteria::location()->subtree( ezpContentLocation::fetchByNodeId( $this->nodeId ) );

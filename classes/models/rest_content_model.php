@@ -62,7 +62,7 @@ class ezpRestContentModel extends ezpRestModel
     {
         $aReturnLocations = array();
         $assignedNodes = $content->assigned_nodes;
-        foreach( $assignedNodes as $node )
+        foreach ( $assignedNodes as $node )
         {
             $location = ezpContentLocation::fromNode( $node );
             $locationData = self::getMetadataByLocation( $location );
@@ -86,7 +86,7 @@ class ezpRestContentModel extends ezpRestModel
     public static function getFieldsByContent( ezpContent $content )
     {
         $aReturnFields = array();
-        foreach( $content->fields as $name => $field )
+        foreach ( $content->fields as $name => $field )
         {
             $aReturnFields[$name] = self::attributeOutputData( $field );
         }
@@ -108,7 +108,7 @@ class ezpRestContentModel extends ezpRestModel
     public static function attributeOutputData( ezpContentField $field )
     {
         // @TODO move to datatype representation layer
-        switch( $field->data_type_string )
+        switch ( $field->data_type_string )
         {
             case 'ezxmltext':
                 $html = $field->content->attribute( 'output' )->attribute( 'output_text' );
@@ -135,7 +135,7 @@ class ezpRestContentModel extends ezpRestModel
         {
             $attributeValue = false;
         }
-        elseif ( count( $attributeValue ) == 1 )
+        else if ( count( $attributeValue ) == 1 )
         {
             $attributeValue = current( $attributeValue );
         }
@@ -163,7 +163,7 @@ class ezpRestContentModel extends ezpRestModel
          $baseUri = $currentRequest->getBaseURI();
          $contentQueryString = $currentRequest->getContentQueryString( true );
 
-         foreach( $content->fields as $fieldName => $fieldValue )
+         foreach ( $content->fields as $fieldName => $fieldValue )
          {
              $links[$fieldName] = $baseUri.'/field/'.$fieldName.$contentQueryString;
          }
@@ -184,16 +184,16 @@ class ezpRestContentModel extends ezpRestModel
         $aRetData = array();
         $aChildren = ezpContentRepository::query( $c );
 
-        foreach( $aChildren as $childNode )
+        foreach ( $aChildren as $childNode )
         {
             $childEntry = self::getMetadataByContent( $childNode );
             $childEntry = array_merge( $childEntry, self::getMetadataByLocation( $childNode->locations ) );
 
             // Add fields with their values if requested
-            if( in_array( ezpRestContentController::VIEWLIST_RESPONSEGROUP_FIELDS, $responseGroups ) )
+            if ( in_array( ezpRestContentController::VIEWLIST_RESPONSEGROUP_FIELDS, $responseGroups ) )
             {
                 $childEntry['fields'] = array();
-                foreach( $childNode->fields as $fieldName => $field )
+                foreach ( $childNode->fields as $fieldName => $field )
                 {
                     $childEntry['fields'][$fieldName] = self::attributeOutputData( $field );
                 }

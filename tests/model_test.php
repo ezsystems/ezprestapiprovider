@@ -30,7 +30,7 @@ class ezpRestContentServiceModelTest extends ezpDatabaseTestCase
             'objectId'
         );
 
-        foreach( $expectedKeys as $key )
+        foreach ( $expectedKeys as $key )
         {
             self::assertArrayHasKey( $key, $res, "Content must contain $key metadata" );
         }
@@ -51,10 +51,10 @@ class ezpRestContentServiceModelTest extends ezpDatabaseTestCase
             'fullUrl'
         );
 
-        foreach( $expectedKeys as $key )
+        foreach ( $expectedKeys as $key )
         {
             self::assertArrayHasKey( $key, $res, "Content location must contain $key metadata" );
-            switch( $key )
+            switch ( $key )
             {
                 case 'nodeId':
                     self::assertType( PHPUnit_Framework_Constraint_IsType::TYPE_INT, $res[$key], 'NodeId must be an integer' );
@@ -78,7 +78,7 @@ class ezpRestContentServiceModelTest extends ezpDatabaseTestCase
         $res = ezpRestContentModel::getFieldsByContent( $content );
         self::assertType( PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $res );
 
-        foreach( $content->fields as $fieldName => $field )
+        foreach ( $content->fields as $fieldName => $field )
         {
             self::assertArrayHasKey( $fieldName, $res, "Result does not contain '$fieldName' field, present for given content" );
             $attributeOutput = ezpRestContentModel::attributeOutputData( $field );
@@ -96,13 +96,13 @@ class ezpRestContentServiceModelTest extends ezpDatabaseTestCase
         $expectedKeys = array( 'type', 'identifier', 'value', 'id', 'classattribute_id' );
 
         // Browse all the fields and compare result provided by ezpRestContentModel::attributeOutputData() with manually generated data
-        foreach( $content->fields as $fieldName => $field )
+        foreach ( $content->fields as $fieldName => $field )
         {
             $aAttributeOutput = ezpRestContentModel::attributeOutputData( $field );
-            foreach( $expectedKeys as $key )
+            foreach ( $expectedKeys as $key )
             {
                 self::assertArrayHasKey( $key, $aAttributeOutput, "Content field must have '$key' metadata" );
-                switch( $key )
+                switch ( $key )
                 {
                     case 'type':
                         self::assertType( PHPUnit_Framework_Constraint_IsType::TYPE_STRING, $aAttributeOutput[$key] );
@@ -174,7 +174,7 @@ class ezpRestContentServiceModelTest extends ezpDatabaseTestCase
         self::assertEquals( $baseUri.'/fields'.$contentQueryString, $links['*'] );
 
         // We must have one entry per field
-        foreach( $content->fields as $fieldName => $field )
+        foreach ( $content->fields as $fieldName => $field )
         {
             self::assertArrayHasKey( $fieldName, $links, "Service link missing for $fieldName" );
             self::assertEquals( $baseUri.'/field/'.$fieldName.$contentQueryString, $links[$fieldName], "Wrong service link for $fieldName" );
