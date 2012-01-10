@@ -34,6 +34,29 @@ class ezpRestContentController extends ezpRestMvcController
           VIEWLIST_RESPONSEGROUP_FIELDS = 'Fields';
 
     /**
+     * Map with the supported protocols for each action.
+     *
+     * @var array
+     */
+    protected $supportedProtocols = array(
+        "viewContent" => array(
+            "http-get" => true,
+        ),
+        "viewFields" => array(
+            "http-get" => true,
+        ),
+        "viewField" => array(
+            "http-get" => true,
+        ),
+        "list" => array(
+            "http-get" => true,
+        ),
+        "countChildren" => array(
+            "http-get" => true,
+        ),
+    );
+
+    /**
      * Handles content requests per node or object ID
      *
      * Requests:
