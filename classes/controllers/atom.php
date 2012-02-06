@@ -16,16 +16,6 @@
  */
 class ezpRestAtomController extends ezcMvcController
 {
-    /**
-     * Map with the supported protocols for each action.
-     *
-     * @var array
-     */
-    protected $supportedProtocols = array(
-        "collection" => array(
-            "http-get" => true,
-        ),
-    );
 
     public function doCollection()
     {
