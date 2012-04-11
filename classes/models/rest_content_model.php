@@ -124,7 +124,14 @@ class ezpRestContentModel extends ezpRestModel
                 $attributeValue = array( $strRepImage );
                 break;
             default:
-                $attributeValue = array( $field->toString() );
+                $datatypeBlacklist = array_fill_keys(
+                    eZINI::instance()->variable( 'ContentSettings', 'DatatypeBlackListForExternal' ),
+                    true
+                );
+                if ( isset ( $datatypeBlacklist[$field->data_type_string] ) )
+                    $attributeValue = array( null );
+                else
+                    $attributeValue = array( $field->toString() );
                 break;
         }
 
